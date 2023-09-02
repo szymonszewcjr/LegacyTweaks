@@ -1,4 +1,4 @@
-import { waitForElm } from "./app";
+import { waitForElm } from "./waitForElm.js";
 import { log } from "./log";
 
 

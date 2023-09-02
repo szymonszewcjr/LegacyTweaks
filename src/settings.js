@@ -7,26 +7,26 @@ import { log } from "./log";
 const defaultSettingsObject =()=> {
   let settingsObject= {
         "requiredTweaks": true,
-        "playlistTitleShift12px": false,
-        "roundedPlayButtons": false,
-        "roundedTopNavbuttons": false,
-        "fullSizeCoverart": false,
-        "removePanelGaps": false,
-        "changePlaybarColor": false,
-        "rootBackgroundColor": false,
-        "removeRoundedPanelCorners": false,
-        "removePlaylistCoverArt": false,
-        "squareChips": false,
-        "removeSidebarListEntryRoundedCorners": false,
-        "playlistEntryUnderscored": false,
-        "removeTrackListRoundedCorners": false,
-        "singleLineTracklist": false,
-        "oldPlayButton": false,
-        "removeExpandLibraryArrowButton": false,
-        "carouselRoundedRectangles": false,
-        "removeBlankSpaceBetweenMyLibraryAndLikedSongs": false,
-        "sidebarLibraryUnderscored": false,
-        "removeRoundedCornersSpotifyConnect": false
+        "playlistTitleShift12px": true,
+        "roundedPlayButtons": true,
+        "roundedTopNavbuttons": true,
+        "fullSizeCoverart": true,
+        "removePanelGaps": true,
+        "changePlaybarColor": true,
+        "rootBackgroundColor": true,
+        "removeRoundedPanelCorners": true,
+        "removePlaylistCoverArt": true,
+        "squareChips": true,
+        "removeSidebarListEntryRoundedCorners": true,
+        "playlistEntryUnderscored": true,
+        "removeTrackListRoundedCorners": true,
+        "singleLineTracklist": true,
+        "oldPlayButton": true,
+        "removeExpandLibraryArrowButton": true,
+        "carouselRoundedRectangles": true,
+        "removeBlankSpaceBetweenMyLibraryAndLikedSongs": true,
+        "sidebarLibraryUnderscored": true,
+        "removeRoundedCornersSpotifyConnect": true
         
 
     }
@@ -242,8 +242,8 @@ const setupSettings = () => {
             saveObject();
         });
 
-    settings.pushSettings();
-    settings.rerender();
+    //settings.pushSettings();
+    
     
     
 

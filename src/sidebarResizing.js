@@ -1,5 +1,5 @@
 import { log } from "./log";
-
+import { waitForElm } from "./waitForElm.js";
 var sidebarWidthLimit;
 
 

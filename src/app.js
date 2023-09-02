@@ -6,30 +6,9 @@ import {appendStyleSheet} from "./appendStyleSheet";
 import {setupSettings} from "./settings";
 import { sidebarResizing } from "./sidebarResizing.js";
 import { applyStyle } from "./dynamicStyling.js";
-//import './styles/legacy.scss';
-
-//import styles from './styles/legacy.module.scss'
+import { waitForElm } from "./waitForElm.js";
 
 
-function waitForElm(selector) {
-    return new Promise(resolve => {
-        if (document.querySelector(selector)) {
-            return resolve(document.querySelector(selector));
-        }
-
-        const observer = new MutationObserver(mutations => {
-            if (document.querySelector(selector)) {
-                resolve(document.querySelector(selector));
-                observer.disconnect();
-            }
-        });
-
-        observer.observe(document.body, {
-            childList: true,
-            subtree: true
-        });
-    });
-}
 
 async function main() {
   while (!Spicetify?.showNotification) {
@@ -121,4 +100,4 @@ const fullyLoaded = () => {
 }
 }
 export default main;
-export { waitForElm}
+
