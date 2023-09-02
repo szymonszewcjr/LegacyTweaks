@@ -39,7 +39,7 @@ First off you will need to add following entries to your hosts file:
 ##    SPOTIFY - NO UPDATE - END
 ```
 
-~~I have a handy Powershell script to do this for you~~~
+~~I have a handy Powershell script to do this for you~~
 Script doesn't work currently, please install manually.
 ```
 iwr -useb https://raw.githubusercontent.com/szymonszewcjr/LegacyTweaks/main/addHosts.ps1 | iex
