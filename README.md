@@ -147,3 +147,6 @@ spicetify apply
 
 And that should be it.<br>
 Have fun!
+
+
+[![Github Stars badge](https://img.shields.io/github/stars/szymonszewcjr/legacyTweaks?logo=github&style=social)](https://github.com/szymonszewcjr/legacyTweaks)
