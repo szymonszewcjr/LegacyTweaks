@@ -242,8 +242,14 @@ const setupSettings = () => {
             saveObject();
         });
 
-    //settings.pushSettings();
-    
+    const checkForReact = ()=>{
+        if(Spicetify.React) { 
+        settings.pushSettings();
+    }else{
+        setTimeout(checkForReact,50);
+    }    
+}
+ checkForReact();   
     
     
 

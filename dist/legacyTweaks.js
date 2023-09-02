@@ -1,4 +1,444 @@
-var legacyTweaks=(()=>{var o,t,s=Object.create,l=Object.defineProperty,d=Object.getOwnPropertyDescriptor,c=Object.getOwnPropertyNames,p=Object.getPrototypeOf,u=Object.prototype.hasOwnProperty,e=(e,t)=>function(){return t||(0,e[c(e)[0]])((t={exports:{}}).exports,t),t.exports},a=(e,t,a)=>{a=null!=e?s(p(e)):{};var r=!t&&e&&e.__esModule?a:l(a,"default",{value:e,enumerable:!0}),o=e,i=void 0,n=void 0;if(o&&"object"==typeof o||"function"==typeof o)for(let e of c(o))u.call(r,e)||e===i||l(r,e,{get:()=>o[e],enumerable:!(n=d(o,e))||n.enumerable});return r},r=e({"external-global-plugin:react"(e,t){t.exports=Spicetify.React}}),e=e({"external-global-plugin:react-dom"(e,t){t.exports=Spicetify.ReactDOM}}),i=function(){var e=Array.prototype.slice.call(arguments);e.unshift("[legacyLook.js]: "),console.log.apply(console,e)},n=a(r()),g=a(e()),y={settingsContainer:"settings-module__settingsContainer___e9wxn_legacyTweaks",heading:"settings-module__heading___AnER-_legacyTweaks",description:"settings-module__description___dP4fR_legacyTweaks",inputWrapper:"settings-module__inputWrapper___LgOrw_legacyTweaks"},m=class{constructor(e,t,a={}){this.name=e,this.settingsId=t,this.initialSettingsFields=a,this.settingsFields=this.initialSettingsFields,this.setRerender=null,this.buttonClassnames=null,this.pushSettings=async()=>{for(Object.entries(this.settingsFields).forEach(([e,t])=>{"button"!==t.type&&void 0===this.getFieldValue(e)&&this.setFieldValue(e,t.defaultValue)});!Spicetify?.Platform?.History?.listen;)await new Promise(e=>setTimeout(e,100));this.stopHistoryListener&&this.stopHistoryListener(),this.stopHistoryListener=Spicetify.Platform.History.listen(e=>{"/preferences"===e.pathname&&this.render()}),"/preferences"===Spicetify.Platform.History.location.pathname&&await this.render()},this.rerender=()=>{this.setRerender&&this.setRerender(Math.random())},this.render=async()=>{for(;!document.getElementById("desktop.settings.selectLanguage");){if("/preferences"!==Spicetify.Platform.History.location.pathname)return;await new Promise(e=>setTimeout(e,100))}var e=document.querySelector(".main-view-container__scroll-node-child main div");if(!e)return console.error("[spcr-settings] settings container not found");this.buttonClassnames=Array.from(e.querySelectorAll(":scope > button")).at(-1)?.className??null;let t=Array.from(e.children).find(e=>e.id===this.settingsId);t?console.log(t):((t=document.createElement("div")).id=this.settingsId,t.className=y.settingsContainer,e.appendChild(t)),g.default.render(n.default.createElement(this.FieldsContainer,null),t)},this.addButton=(e,t,a,r,o)=>{this.settingsFields[e]={type:"button",description:t,value:a,events:{onClick:r,...o}}},this.addInput=(e,t,a,r,o)=>{this.settingsFields[e]={type:"input",description:t,defaultValue:a,events:{onChange:r,...o}}},this.addHidden=(e,t)=>{this.settingsFields[e]={type:"hidden",defaultValue:t}},this.addToggle=(e,t,a,r,o)=>{this.settingsFields[e]={type:"toggle",description:t,defaultValue:a,events:{onChange:r,...o}}},this.addDropDown=(e,t,a,r,o,i)=>{this.settingsFields[e]={type:"dropdown",description:t,defaultValue:a[r],options:a,events:{onSelect:o,...i}}},this.getFieldValue=e=>JSON.parse(Spicetify.LocalStorage.get(this.settingsId+"."+e)||"{}")?.value,this.setFieldValue=(e,t)=>{Spicetify.LocalStorage.set(this.settingsId+"."+e,JSON.stringify({value:t}))},this.FieldsContainer=()=>{var[e,t]=(0,n.useState)(0);return this.setRerender=t,n.default.createElement("div",{className:y.settingsContainer,key:e},n.default.createElement("h2",{className:["main-shelf-title main-type-cello",y.heading].join(" ")},this.name),Object.entries(this.settingsFields).map(([e,t])=>n.default.createElement(this.Field,{nameId:e,field:t})))},this.Field=a=>{var e=this.settingsId+"."+a.nameId;let t;if(t="button"===a.field.type?a.field.value:this.getFieldValue(a.nameId),"hidden"===a.field.type)return n.default.createElement(n.default.Fragment,null);const[r,o]=(0,n.useState)(t),i=e=>{void 0!==e&&(o(e),this.setFieldValue(a.nameId,e))};return n.default.createElement(n.default.Fragment,null,n.default.createElement("div",{className:"main-type-mesto",style:{color:"var(--spice-subtext)"}},n.default.createElement("label",{className:y.description,htmlFor:e},a.field.description||"")),n.default.createElement("span",{className:["x-settings-secondColumn",y.inputWrapper].join(" ")},"input"===a.field.type?n.default.createElement("input",{className:"main-dropDown-dropDown",id:e,dir:"ltr",value:r,type:"text",...a.field.events,onChange:e=>{i(e.currentTarget.value);var t=a.field.events?.onChange;t&&t(e)}}):"button"===a.field.type?n.default.createElement("span",{className:""},n.default.createElement("button",{id:e,className:this.buttonClassnames??"",...a.field.events,onClick:e=>{i();var t=a.field.events?.onClick;t&&t(e)},type:"button"},r)):"toggle"===a.field.type?n.default.createElement("label",{className:"x-toggle-wrapper x-settings-secondColumn"},n.default.createElement("input",{id:e,className:"x-toggle-input",type:"checkbox",checked:r,...a.field.events,onClick:e=>{i(e.currentTarget.checked);var t=a.field.events?.onClick;t&&t(e)}}),n.default.createElement("span",{className:"x-toggle-indicatorWrapper"},n.default.createElement("span",{className:"x-toggle-indicator"}))):"dropdown"===a.field.type?n.default.createElement("select",{className:"main-dropDown-dropDown",id:e,...a.field.events,onChange:e=>{i(a.field.options[e.currentTarget.selectedIndex]);var t=a.field.events?.onChange;t&&t(e)}},a.field.options.map((e,t)=>n.default.createElement("option",{selected:e===r,value:t+1},e))):n.default.createElement(n.default.Fragment,null)))}}},b=e=>{o=e,document.querySelector("html").style.setProperty("--nav-bar-width",o+"px")},h=()=>{JSON.parse(Spicetify.LocalStorage.get("LegacyLook-settingsObject")).removePanelGaps?(w(".Root").then(e=>{e.style.setProperty("--panel-gap","0px","important")}),w('[aria-label="Main"]'),i("Removed gaps between panels...")):(i("Adding back gaps between panels..."),w(".Root").then(e=>{e.style.setProperty("--panel-gap","8px","important")}),w('[aria-label="Main"]'))},f=(JSON.parse(Spicetify.LocalStorage.get("LegacyLook-settingsObject")),()=>{let e=`
+var legacyTweaks = (() => {
+  var __create = Object.create;
+  var __defProp = Object.defineProperty;
+  var __getOwnPropDesc = Object.getOwnPropertyDescriptor;
+  var __getOwnPropNames = Object.getOwnPropertyNames;
+  var __getProtoOf = Object.getPrototypeOf;
+  var __hasOwnProp = Object.prototype.hasOwnProperty;
+  var __commonJS = (cb, mod) => function __require() {
+    return mod || (0, cb[__getOwnPropNames(cb)[0]])((mod = { exports: {} }).exports, mod), mod.exports;
+  };
+  var __copyProps = (to, from, except, desc) => {
+    if (from && typeof from === "object" || typeof from === "function") {
+      for (let key of __getOwnPropNames(from))
+        if (!__hasOwnProp.call(to, key) && key !== except)
+          __defProp(to, key, { get: () => from[key], enumerable: !(desc = __getOwnPropDesc(from, key)) || desc.enumerable });
+    }
+    return to;
+  };
+  var __toESM = (mod, isNodeMode, target) => (target = mod != null ? __create(__getProtoOf(mod)) : {}, __copyProps(
+    isNodeMode || !mod || !mod.__esModule ? __defProp(target, "default", { value: mod, enumerable: true }) : target,
+    mod
+  ));
+
+  // external-global-plugin:react
+  var require_react = __commonJS({
+    "external-global-plugin:react"(exports, module) {
+      module.exports = Spicetify.React;
+    }
+  });
+
+  // external-global-plugin:react-dom
+  var require_react_dom = __commonJS({
+    "external-global-plugin:react-dom"(exports, module) {
+      module.exports = Spicetify.ReactDOM;
+    }
+  });
+
+  // src/log.js
+  var log = function() {
+    var args = Array.prototype.slice.call(arguments);
+    args.unshift("[legacyLook.js]: ");
+    console.log.apply(console, args);
+  };
+
+  // src/appendLikedSongs.js
+  var tryAppendLikesSongsHyperlink = (el) => {
+    try {
+      log("Trying to append 'Liked Songs' to sidebar list...");
+      if (!document.querySelector(`#customLikedSongs`)) {
+        let likesSongsLink = `<li class="main-yourLibraryX-navItem InvalidDropTarget" id="customLikedSongs">
+                                                                                                                                                                      
+              <a draggable="false" aria-label="Liked Songs" class="link-subtle main-yourLibraryX-navLink" href="#" aria-expanded="false" onclick="Spicetify.Platform.History.push('/collection/tracks')">
+          
+              <svg role="img" height="35"
+                  width="35" aria-hidden="true" class="Svg-sc-ytk21e-0 Svg-img-medium-icon search-icon" viewBox="0 -5 24 24"
+                  data-encore-id="icon">
+                  <path
+                      d="M15.724 4.22A4.313 4.313 0 0 0 12.192.814a4.269 4.269 0 0 0-3.622 1.13.837.837 0 0 1-1.14 0 4.272 4.272 0 0 0-6.21 5.855l5.916 7.05a1.128 1.128 0 0 0 1.727 0l5.916-7.05a4.228 4.228 0 0 0 .945-3.577z"
+                      style="fill: gray;"
+                      >
+                  </path>
+              </svg>
+              
+              <svg role="img" height="24" width="24" aria-hidden="true"
+                  class="Svg-sc-ytk21e-0 Svg-img-medium-icon search-active-icon" viewBox="0 0 24 24" data-encore-id="icon">
+                  <path
+                      d="M15.356 10.558c0 2.623-2.16 4.75-4.823 4.75-2.664 0-4.824-2.127-4.824-4.75s2.16-4.75 4.824-4.75c2.664 0 4.823 2.127 4.823 4.75z">
+                  </path>
+                  <path
+                      d="M1.126 10.558c0-5.14 4.226-9.28 9.407-9.28 5.18 0 9.407 4.14 9.407 9.28a9.157 9.157 0 0 1-2.077 5.816l4.344 4.344a1 1 0 0 1-1.414 1.414l-4.353-4.353a9.454 9.454 0 0 1-5.907 2.058c-5.18 0-9.407-4.14-9.407-9.28zm9.407-7.28c-4.105 0-7.407 3.274-7.407 7.28s3.302 7.279 7.407 7.279 7.407-3.273 7.407-7.28c0-4.005-3.302-7.278-7.407-7.278z">
+                  </path>
+              </svg>
+              
+              <span data-encore-id="type" class="Type__TypeElement-sc-goli3j-0 TypeElement-balladBold-type" style="transform:translateX(-11px) ;">
+                  Liked Songs
+              </span>
+          
+              </a>
+          
+          </li>
+          `;
+        el.insertAdjacentHTML("beforeend", likesSongsLink);
+      }
+      if (document.querySelector(`#customLikedSongs`)) {
+        log("Success! Liked Songs hyperlink is present...");
+      } else {
+        log("Liked Songs hyperlink injection has failed...");
+      }
+    } catch (error) {
+      log("Liked Songs hyperlink injection has failed..., got an error:", error);
+    }
+  };
+
+  // src/injectRefreshButton.js
+  var injectRefreshUIButton = () => {
+    let Snippet = `
+    <svg role="img" height="16"
+            width="16" aria-hidden="true" class="Svg-sc-ytk21e-0 Svg-img-16-icon-autoMirror main-topBar-icon"
+            viewBox="0 0 128 128" data-encore-id="icon" style="fill:white;">
+            <path
+                d="M16.08,59.26A8,8,0,0,1,0,59.26a59,59,0,0,1,97.13-45V8a8,8,0,1,1,16.08,0V33.35a8,8,0,0,1-8,8L80.82,43.62a8,8,0,1,1-1.44-15.95l8-.73A43,43,0,0,0,16.08,59.26Zm22.77,19.6a8,8,0,0,1,1.44,16l-10.08.91A42.95,42.95,0,0,0,102,63.86a8,8,0,0,1,16.08,0A59,59,0,0,1,22.3,110v4.18a8,8,0,0,1-16.08,0V89.14h0a8,8,0,0,1,7.29-8l25.31-2.3Z"
+                style="fill:whiteSmoke;opacity:0.8"></path>
+        </svg>`;
+    let refButtonElement = document.createElement("button");
+    refButtonElement.classList = "main-topBar-button main-topBar-forward";
+    refButtonElement.style = "border-radius: 5px;";
+    refButtonElement.onclick = function() {
+      location.reload();
+    };
+    const toNodes = (html) => new DOMParser().parseFromString(html, "text/html").body.childNodes[0];
+    refButtonElement.appendChild(toNodes(Snippet));
+    return refButtonElement;
+  };
+
+  // node_modules/spcr-settings/settingsSection.tsx
+  var import_react = __toESM(require_react());
+  var import_react_dom = __toESM(require_react_dom());
+
+  // postcss-module:C:\Users\szymo\AppData\Local\Temp\tmp-6416-Yu8Moa3MXtYM\18a5718e1cd0\settings.module.css
+  var settings_module_default = { "settingsContainer": "settings-module__settingsContainer___e9wxn_legacyTweaks", "heading": "settings-module__heading___AnER-_legacyTweaks", "description": "settings-module__description___dP4fR_legacyTweaks", "inputWrapper": "settings-module__inputWrapper___LgOrw_legacyTweaks" };
+
+  // node_modules/spcr-settings/settingsSection.tsx
+  var SettingsSection = class {
+    constructor(name, settingsId, initialSettingsFields = {}) {
+      this.name = name;
+      this.settingsId = settingsId;
+      this.initialSettingsFields = initialSettingsFields;
+      this.settingsFields = this.initialSettingsFields;
+      this.setRerender = null;
+      this.buttonClassnames = null;
+      this.pushSettings = async () => {
+        Object.entries(this.settingsFields).forEach(([nameId, field]) => {
+          if (field.type !== "button" && this.getFieldValue(nameId) === void 0) {
+            this.setFieldValue(nameId, field.defaultValue);
+          }
+        });
+        while (!Spicetify?.Platform?.History?.listen) {
+          await new Promise((resolve) => setTimeout(resolve, 100));
+        }
+        if (this.stopHistoryListener)
+          this.stopHistoryListener();
+        this.stopHistoryListener = Spicetify.Platform.History.listen((e) => {
+          if (e.pathname === "/preferences") {
+            this.render();
+          }
+        });
+        if (Spicetify.Platform.History.location.pathname === "/preferences") {
+          await this.render();
+        }
+      };
+      this.rerender = () => {
+        if (this.setRerender) {
+          this.setRerender(Math.random());
+        }
+      };
+      this.render = async () => {
+        while (!document.getElementById("desktop.settings.selectLanguage")) {
+          if (Spicetify.Platform.History.location.pathname !== "/preferences")
+            return;
+          await new Promise((resolve) => setTimeout(resolve, 100));
+        }
+        const allSettingsContainer = document.querySelector(
+          ".main-view-container__scroll-node-child main div"
+        );
+        if (!allSettingsContainer)
+          return console.error("[spcr-settings] settings container not found");
+        this.buttonClassnames = Array.from(allSettingsContainer.querySelectorAll(":scope > button")).at(
+          -1
+        )?.className ?? null;
+        let pluginSettingsContainer = Array.from(
+          allSettingsContainer.children
+        ).find((child) => child.id === this.settingsId);
+        if (!pluginSettingsContainer) {
+          pluginSettingsContainer = document.createElement("div");
+          pluginSettingsContainer.id = this.settingsId;
+          pluginSettingsContainer.className = settings_module_default.settingsContainer;
+          allSettingsContainer.appendChild(pluginSettingsContainer);
+        } else {
+          console.log(pluginSettingsContainer);
+        }
+        import_react_dom.default.render(/* @__PURE__ */ import_react.default.createElement(this.FieldsContainer, null), pluginSettingsContainer);
+      };
+      this.addButton = (nameId, description, value, onClick, events) => {
+        this.settingsFields[nameId] = {
+          type: "button",
+          description,
+          value,
+          events: {
+            onClick,
+            ...events
+          }
+        };
+      };
+      this.addInput = (nameId, description, defaultValue, onChange, events) => {
+        this.settingsFields[nameId] = {
+          type: "input",
+          description,
+          defaultValue,
+          events: {
+            onChange,
+            ...events
+          }
+        };
+      };
+      this.addHidden = (nameId, defaultValue) => {
+        this.settingsFields[nameId] = {
+          type: "hidden",
+          defaultValue
+        };
+      };
+      this.addToggle = (nameId, description, defaultValue, onChange, events) => {
+        this.settingsFields[nameId] = {
+          type: "toggle",
+          description,
+          defaultValue,
+          events: {
+            onChange,
+            ...events
+          }
+        };
+      };
+      this.addDropDown = (nameId, description, options, defaultIndex, onSelect, events) => {
+        this.settingsFields[nameId] = {
+          type: "dropdown",
+          description,
+          defaultValue: options[defaultIndex],
+          options,
+          events: {
+            onSelect,
+            ...events
+          }
+        };
+      };
+      this.getFieldValue = (nameId) => {
+        return JSON.parse(
+          Spicetify.LocalStorage.get(`${this.settingsId}.${nameId}`) || "{}"
+        )?.value;
+      };
+      this.setFieldValue = (nameId, newValue) => {
+        Spicetify.LocalStorage.set(
+          `${this.settingsId}.${nameId}`,
+          JSON.stringify({ value: newValue })
+        );
+      };
+      this.FieldsContainer = () => {
+        const [rerender, setRerender] = (0, import_react.useState)(0);
+        this.setRerender = setRerender;
+        return /* @__PURE__ */ import_react.default.createElement("div", {
+          className: settings_module_default.settingsContainer,
+          key: rerender
+        }, /* @__PURE__ */ import_react.default.createElement("h2", {
+          className: ["main-shelf-title main-type-cello", settings_module_default.heading].join(
+            " "
+          )
+        }, this.name), Object.entries(this.settingsFields).map(([nameId, field]) => {
+          return /* @__PURE__ */ import_react.default.createElement(this.Field, {
+            nameId,
+            field
+          });
+        }));
+      };
+      this.Field = (props) => {
+        const id = `${this.settingsId}.${props.nameId}`;
+        let defaultStateValue;
+        if (props.field.type === "button") {
+          defaultStateValue = props.field.value;
+        } else {
+          defaultStateValue = this.getFieldValue(props.nameId);
+        }
+        if (props.field.type === "hidden") {
+          return /* @__PURE__ */ import_react.default.createElement(import_react.default.Fragment, null);
+        }
+        const [value, setValueState] = (0, import_react.useState)(defaultStateValue);
+        const setValue = (newValue) => {
+          if (newValue !== void 0) {
+            setValueState(newValue);
+            this.setFieldValue(props.nameId, newValue);
+          }
+        };
+        return /* @__PURE__ */ import_react.default.createElement(import_react.default.Fragment, null, /* @__PURE__ */ import_react.default.createElement("div", {
+          className: "main-type-mesto",
+          style: { color: "var(--spice-subtext)" }
+        }, /* @__PURE__ */ import_react.default.createElement("label", {
+          className: settings_module_default.description,
+          htmlFor: id
+        }, props.field.description || "")), /* @__PURE__ */ import_react.default.createElement("span", {
+          className: ["x-settings-secondColumn", settings_module_default.inputWrapper].join(" ")
+        }, props.field.type === "input" ? /* @__PURE__ */ import_react.default.createElement("input", {
+          className: "main-dropDown-dropDown",
+          id,
+          dir: "ltr",
+          value,
+          type: "text",
+          ...props.field.events,
+          onChange: (e) => {
+            setValue(e.currentTarget.value);
+            const onChange = props.field.events?.onChange;
+            if (onChange)
+              onChange(e);
+          }
+        }) : props.field.type === "button" ? /* @__PURE__ */ import_react.default.createElement("span", {
+          className: ""
+        }, /* @__PURE__ */ import_react.default.createElement("button", {
+          id,
+          className: this.buttonClassnames ?? "",
+          ...props.field.events,
+          onClick: (e) => {
+            setValue();
+            const onClick = props.field.events?.onClick;
+            if (onClick)
+              onClick(e);
+          },
+          type: "button"
+        }, value)) : props.field.type === "toggle" ? /* @__PURE__ */ import_react.default.createElement("label", {
+          className: "x-toggle-wrapper x-settings-secondColumn"
+        }, /* @__PURE__ */ import_react.default.createElement("input", {
+          id,
+          className: "x-toggle-input",
+          type: "checkbox",
+          checked: value,
+          ...props.field.events,
+          onClick: (e) => {
+            setValue(e.currentTarget.checked);
+            const onClick = props.field.events?.onClick;
+            if (onClick)
+              onClick(e);
+          }
+        }), /* @__PURE__ */ import_react.default.createElement("span", {
+          className: "x-toggle-indicatorWrapper"
+        }, /* @__PURE__ */ import_react.default.createElement("span", {
+          className: "x-toggle-indicator"
+        }))) : props.field.type === "dropdown" ? /* @__PURE__ */ import_react.default.createElement("select", {
+          className: "main-dropDown-dropDown",
+          id,
+          ...props.field.events,
+          onChange: (e) => {
+            setValue(
+              props.field.options[e.currentTarget.selectedIndex]
+            );
+            const onChange = props.field.events?.onChange;
+            if (onChange)
+              onChange(e);
+          }
+        }, props.field.options.map((option, i) => {
+          return /* @__PURE__ */ import_react.default.createElement("option", {
+            selected: option === value,
+            value: i + 1
+          }, option);
+        })) : /* @__PURE__ */ import_react.default.createElement(import_react.default.Fragment, null)));
+      };
+    }
+  };
+
+  // src/waitForElm.js
+  var waitForElm = (selector) => {
+    return new Promise((resolve) => {
+      if (document.querySelector(selector)) {
+        return resolve(document.querySelector(selector));
+      }
+      const observer = new MutationObserver((mutations) => {
+        if (document.querySelector(selector)) {
+          resolve(document.querySelector(selector));
+          observer.disconnect();
+        }
+      });
+      observer.observe(document.body, {
+        childList: true,
+        subtree: true
+      });
+    });
+  };
+
+  // src/sidebarResizing.js
+  var sidebarWidthLimit;
+  var changedMaxWidthSignal = (newLimit) => {
+    sidebarWidthLimit = newLimit;
+    document.querySelector(`html`).style.setProperty("--nav-bar-width", `${sidebarWidthLimit}px`);
+  };
+  var sidebarResizing = () => {
+    sidebarWidthLimit = (Spicetify == null ? void 0 : Spicetify.LocalStorage) ? Spicetify == null ? void 0 : Spicetify.LocalStorage.get("LegacyLook-sidebarMaxWidth") : 420;
+    let isBigCoverListenerPending = false;
+    log("Sidebar width limit is set to:", sidebarWidthLimit);
+    let widthMutationObserver = new MutationObserver((e) => {
+      sidebarWidthLimit = (Spicetify == null ? void 0 : Spicetify.LocalStorage) ? Spicetify == null ? void 0 : Spicetify.LocalStorage.get("LegacyLook-sidebarMaxWidth") : 420;
+      let width = parseInt(e[0].target.style.getPropertyValue("--nav-bar-width"), 10);
+      if (!!document.querySelector(`.main-coverSlotExpanded-containerExpanding`)) {
+        if (document.querySelectorAll(`.main-yourLibraryX-libraryIsExpanded>div:nth-child(1)>header>div>button.main-useDropTarget-show`).length === 2) {
+          let collapseButton = document.querySelector(`.main-yourLibraryX-iconOnly.main-useDropTarget-base.main-useDropTarget-show`);
+          collapseButton.style.display = "block";
+          collapseButton.click();
+          collapseButton.style.display = "";
+        }
+        if (width > sidebarWidthLimit) {
+          document.querySelector(`html`).style.setProperty("--nav-bar-width", `${sidebarWidthLimit}px`);
+        }
+      } else {
+        log("isBigCoverListenerPending", isBigCoverListenerPending);
+        if (!isBigCoverListenerPending) {
+          isBigCoverListenerPending = true;
+          waitForElm(".main-coverSlotExpanded-containerExpanding").then(() => {
+            if (document.querySelector(`.main-yourLibraryX-header.main-yourLibraryX-headerIsCollapsed`)) {
+              document.querySelector(`.main-yourLibraryX-collapseButton.main-yourLibraryX-collapseButtonIsCollapsed`).firstChild.click();
+            }
+            document.querySelector(`html`).style.setProperty("--nav-bar-width", `${sidebarWidthLimit}px`);
+            isBigCoverListenerPending = 0;
+          });
+        }
+      }
+    });
+    widthMutationObserver.observe(document.querySelector(`html`), {
+      attributes: true,
+      attributeFilter: ["style"]
+    });
+  };
+
+  // src/removePanelGaps.js
+  var removePanelGaps = () => {
+    waitForElm(`.Root`).then((element) => {
+      element.style.setProperty("--panel-gap", "0px", "important");
+    });
+    waitForElm(`[aria-label="Main"]`, (elm) => elm.style.gap = "0px");
+    log("Removed gaps between panels...");
+  };
+  var revertPanelGaps = () => {
+    log("Adding back gaps between panels...");
+    waitForElm(`.Root`).then((element) => {
+      element.style.setProperty("--panel-gap", "8px", "important");
+    });
+    waitForElm(`[aria-label="Main"]`, (elm) => elm.style.gap = "8px");
+  };
+  var updatePanelGapsState = () => {
+    let settingsObject2 = JSON.parse(Spicetify.LocalStorage.get("LegacyLook-settingsObject"));
+    if (settingsObject2["removePanelGaps"]) {
+      removePanelGaps();
+    } else {
+      revertPanelGaps();
+    }
+  };
+
+  // src/styleSnippets.js
+  var requiredTweaks = `
 
 :root {
     --none: 0px;
@@ -68,13 +508,15 @@ span.x-settings-secondColumn.settings-module__inputWrapper___LgOrw_legacyDlook >
     margin-top: 40px;
     }
 
-`;return(t=JSON.parse(Spicetify.LocalStorage.get("LegacyLook-settingsObject"))).playlistTitleShift12px&&(e+=`
+`;
+  var playlistTitleShift12px = `
 
 .main-topBar-topbarContent.main-entityHeader-topbarContentFadeIn>span {
     transform: translate(12px);
 }
 
-`),t.roundedPlayButtons&&(e+=`
+`;
+  var roundedPlayButtons = `
 
 
 .main-topBar-button {
@@ -85,7 +527,8 @@ span.x-settings-secondColumn.settings-module__inputWrapper___LgOrw_legacyDlook >
     border-radius: var(--br5);
 }
 
-`),t.roundedTopNavbuttons&&(e+=`
+`;
+  var roundedTopNavbuttons = `
 
 [aria-label="Friend Activity"] {
     border-radius: var(--br5);
@@ -100,21 +543,8 @@ button>figure {
     border-radius: var(--br5);
 }
 
-`),t.removeRoundedPanelCorners&&(e+=`
-
-
-.Root__main-view {
-    border-radius: var(--none) !important;
-}
-
-.main-yourLibraryX-entryPoints {
-    border-radius: var(--none) !important;
-}
-.nav-ylx .Root__main-view .os-viewport{
-    border-radius: var(--none) !important;
-}
-
-`),t.fullSizeCoverart&&(e+=`
+`;
+  var fullSizeCoverart = `
 
 .main-coverSlotExpanded-containerExpanding {
     width: var(--nav-bar-width);
@@ -125,16 +555,19 @@ button>figure {
 .os-viewport.os-viewport-native-scrollbars-invisible>.os-content>.main-yourLibraryX-libraryRootlist {
     height: calc(100% - var(--nav-bar-width))
 }
-`),t.removePanelGaps&&(e+=`
+`;
+  var removePanelGaps2 = `
 div.main {
     --panel-gap: var(--none) !important;
 }
-`),t.changePlaybarColor&&(e+=`
+`;
+  var changePlaybarColor = `
 
 .main-nowPlayingBar-container {
     background-color: var(--playbarColor) !important
 }
-`),t.rootBackgroundColor&&(e+=`
+`;
+  var rootBackgroundColor = `
 
 .Root__top-container {
     
@@ -153,12 +586,23 @@ div.main {
     background-color: var(--bgcolor);
 }
 
-`),t.squareChips&&(e+=`
+`;
+  var removeRoundedPanelCorners = `
 
-[data-encore-id="chip"]>span {
-    border-radius: var(--br5);
+
+.Root__main-view {
+    border-radius: var(--none) !important;
 }
-`),t.removePlaylistCoverArt&&(e+=`
+
+.main-yourLibraryX-entryPoints {
+    border-radius: var(--none) !important;
+}
+.nav-ylx .Root__main-view .os-viewport{
+    border-radius: var(--none) !important;
+}
+
+`;
+  var removePlaylistCoverArt = `
 [aria-colindex="2"]>img {
     display: none;
 }
@@ -170,7 +614,14 @@ div.main {
     display: none;
 }
 
-`),t.removeSidebarListEntryRoundedCorners&&(e+=`
+`;
+  var squareChips = `
+
+[data-encore-id="chip"]>span {
+    border-radius: var(--br5);
+}
+`;
+  var removeSidebarListEntryRoundedCorners = `
 [aria-posinset]>div {
     border-radius: var(--none);
 }
@@ -179,16 +630,19 @@ div.main {
     border-radius: var(--none);
 
 }
-`),t.playlistEntryUnderscored&&(e+=`
+`;
+  var playlistEntryUnderscored = `
 
 [aria-rowindex] {
     border-bottom: 1px solid rgba(255, 255, 255, 0.1);
 }
-`),t.removeTrackListRoundedCorners&&(e+=`
+`;
+  var removeTrackListRoundedCorners = `
 .main-trackList-trackListRow {
     border-radius: var(--none)
 }
-`),t.singleLineTracklist&&(e+=`
+`;
+  var singleLineTracklist = `
 
 .main-trackList-trackListRow>[aria-colindex].main-trackList-rowSectionStart>.main-trackList-rowMainContent {
     display: flex;
@@ -207,7 +661,8 @@ div.main {
     margin-bottom: 0px;
     border-bottom: none;
 }
-`),t.oldPlayButton&&(e+=`
+`;
+  var oldPlayButton = `
 .main-playPauseButton-button {
     background-color: transparent;
     border: 2px solid #bcbcbc;
@@ -217,32 +672,395 @@ div.main {
 .main-playPauseButton-button>svg>path {
     fill: #bababa;
 }
-`),t.removeExpandLibraryArrowButton&&(e+=`
+`;
+  var removeExpandLibraryArrowButton = `
 .Button-sc-1dqy6lx-0.Button-sm-16-buttonTertiary-iconOnly-useBrowserDefaultFocusStyle.main-yourLibraryX-button.main-yourLibraryX-iconOnly.main-useDropTarget-base:nth-of-type(2) {
     display: none !important;
 }
-`),t.carouselRoundedRectangles&&(e+=`
+`;
+  var carouselRoundedRectangles = `
 
 .search-searchCategory-carouselButton {
     border-radius: var(--br5);
 }
-`),t.removeBlankSpaceBetweenMyLibraryAndLikedSongs&&(e+=`
+`;
+  var removeBlankSpaceBetweenMyLibraryAndLikedSongs = `
 
 
 .main-yourLibraryX-entryPoints.main-yourLibraryX-library {
     margin-top: -16px;
 }
-`),t.sidebarLibraryUnderscored&&(e+=`
+`;
+  var sidebarLibraryUnderscored = `
 
 .main-useDropTarget-base.main-yourLibraryX-listItem {
     border-bottom: 1px solid rgb(109 109 109 / 20%);
 }
-`),t.removeRoundedCornersSpotifyConnect&&(e+=`
+`;
+  var removeRoundedCornersSpotifyConnect = `
 .main-connectBar-connected {
     border-radius: 0px !important;
     
 }
-`),e}),v=e=>{var t=document.createElement("style");return t.type="text/css",t.rel="stylesheet",t.id="legacyStyle",t.textContent=e,t},S=()=>{document.querySelector("#legacyStyle")&&document.querySelector("#legacyStyle").remove(),k()},k=()=>{var e=v(f());document.head.appendChild(e),h(),document.head.querySelector("#legacyStyle")?i("Success! Applied custom stylesheet."):(i("FAILED to apply stylesheet! Trying again."),document.head.appendChild(e),document.head.querySelector("#legacyStyle")||i("FAILED to apply stylesheet twice! Giving up, Contact developer."))},L=()=>{return{requiredTweaks:!0,playlistTitleShift12px:!1,roundedPlayButtons:!1,roundedTopNavbuttons:!1,fullSizeCoverart:!1,removePanelGaps:!1,changePlaybarColor:!1,rootBackgroundColor:!1,removeRoundedPanelCorners:!1,removePlaylistCoverArt:!1,squareChips:!1,removeSidebarListEntryRoundedCorners:!1,playlistEntryUnderscored:!1,removeTrackListRoundedCorners:!1,singleLineTracklist:!1,oldPlayButton:!1,removeExpandLibraryArrowButton:!1,carouselRoundedRectangles:!1,removeBlankSpaceBetweenMyLibraryAndLikedSongs:!1,sidebarLibraryUnderscored:!1,removeRoundedCornersSpotifyConnect:!1}};function w(r){return new Promise(t=>{if(document.querySelector(r))return t(document.querySelector(r));const a=new MutationObserver(e=>{document.querySelector(r)&&(t(document.querySelector(r)),a.disconnect())});a.observe(document.body,{childList:!0,subtree:!0})})}var x=async function(){for(;null==Spicetify||!Spicetify.showNotification;)await new Promise(e=>setTimeout(e,100));"1.2.10.760"!=Spicetify.Platform.PlatformData.event_sender_context_information.client_version_string?Spicetify.LocalStorage.get("LegacyLook-hasDisabledCompatibilityWarning")||Spicetify.showNotification(`
+`;
+
+  // src/dynamicStyling.js
+  var settingsObject = JSON.parse(Spicetify.LocalStorage.get("LegacyLook-settingsObject"));
+  var composeStylesheet = () => {
+    settingsObject = JSON.parse(Spicetify.LocalStorage.get("LegacyLook-settingsObject"));
+    let styleTextContent = requiredTweaks;
+    if (settingsObject["playlistTitleShift12px"]) {
+      styleTextContent += playlistTitleShift12px;
+    }
+    if (settingsObject["roundedPlayButtons"]) {
+      styleTextContent += roundedPlayButtons;
+    }
+    if (settingsObject["roundedTopNavbuttons"]) {
+      styleTextContent += roundedTopNavbuttons;
+    }
+    if (settingsObject["removeRoundedPanelCorners"]) {
+      styleTextContent += removeRoundedPanelCorners;
+    }
+    if (settingsObject["fullSizeCoverart"]) {
+      styleTextContent += fullSizeCoverart;
+    }
+    if (settingsObject["removePanelGaps"]) {
+      styleTextContent += removePanelGaps2;
+    }
+    if (settingsObject["changePlaybarColor"]) {
+      styleTextContent += changePlaybarColor;
+    }
+    if (settingsObject["rootBackgroundColor"]) {
+      styleTextContent += rootBackgroundColor;
+    }
+    if (settingsObject["squareChips"]) {
+      styleTextContent += squareChips;
+    }
+    if (settingsObject["removePlaylistCoverArt"]) {
+      styleTextContent += removePlaylistCoverArt;
+    }
+    if (settingsObject["removeSidebarListEntryRoundedCorners"]) {
+      styleTextContent += removeSidebarListEntryRoundedCorners;
+    }
+    if (settingsObject["playlistEntryUnderscored"]) {
+      styleTextContent += playlistEntryUnderscored;
+    }
+    if (settingsObject["removeTrackListRoundedCorners"]) {
+      styleTextContent += removeTrackListRoundedCorners;
+    }
+    if (settingsObject["singleLineTracklist"]) {
+      styleTextContent += singleLineTracklist;
+    }
+    if (settingsObject["oldPlayButton"]) {
+      styleTextContent += oldPlayButton;
+    }
+    if (settingsObject["removeExpandLibraryArrowButton"]) {
+      styleTextContent += removeExpandLibraryArrowButton;
+    }
+    if (settingsObject["carouselRoundedRectangles"]) {
+      styleTextContent += carouselRoundedRectangles;
+    }
+    if (settingsObject["removeBlankSpaceBetweenMyLibraryAndLikedSongs"]) {
+      styleTextContent += removeBlankSpaceBetweenMyLibraryAndLikedSongs;
+    }
+    if (settingsObject["sidebarLibraryUnderscored"]) {
+      styleTextContent += sidebarLibraryUnderscored;
+    }
+    if (settingsObject["removeRoundedCornersSpotifyConnect"]) {
+      styleTextContent += removeRoundedCornersSpotifyConnect;
+    }
+    return styleTextContent;
+  };
+  var makeStyleElement = (_textContent) => {
+    var ss = document.createElement("style");
+    ss.type = "text/css";
+    ss.rel = "stylesheet";
+    ss.id = "legacyStyle";
+    ss.textContent = _textContent;
+    return ss;
+  };
+  var updateStyleElement = () => {
+    if (document.querySelector(`#legacyStyle`)) {
+      document.querySelector(`#legacyStyle`).remove();
+      applyStyle();
+    } else {
+      applyStyle();
+    }
+  };
+  var applyStyle = () => {
+    let styleEl = makeStyleElement(composeStylesheet());
+    document.head.appendChild(styleEl);
+    updatePanelGapsState();
+    if (document.head.querySelector("#legacyStyle")) {
+      log("Success! Applied custom stylesheet.");
+    } else {
+      log("FAILED to apply stylesheet! Trying again.");
+      document.head.appendChild(styleEl);
+      if (!document.head.querySelector("#legacyStyle")) {
+        log("FAILED to apply stylesheet twice! Giving up, Contact developer.");
+      }
+    }
+  };
+
+  // src/settings.js
+  var defaultSettingsObject = () => {
+    let settingsObject2 = {
+      "requiredTweaks": true,
+      "playlistTitleShift12px": true,
+      "roundedPlayButtons": true,
+      "roundedTopNavbuttons": true,
+      "fullSizeCoverart": true,
+      "removePanelGaps": true,
+      "changePlaybarColor": true,
+      "rootBackgroundColor": true,
+      "removeRoundedPanelCorners": true,
+      "removePlaylistCoverArt": true,
+      "squareChips": true,
+      "removeSidebarListEntryRoundedCorners": true,
+      "playlistEntryUnderscored": true,
+      "removeTrackListRoundedCorners": true,
+      "singleLineTracklist": true,
+      "oldPlayButton": true,
+      "removeExpandLibraryArrowButton": true,
+      "carouselRoundedRectangles": true,
+      "removeBlankSpaceBetweenMyLibraryAndLikedSongs": true,
+      "sidebarLibraryUnderscored": true,
+      "removeRoundedCornersSpotifyConnect": true
+    };
+    return settingsObject2;
+  };
+  var setupSettings = () => {
+    let settingsFromStorage = JSON.parse(Spicetify.LocalStorage.get("LegacyLook-settingsObject"));
+    let settingsObject2 = {};
+    const saveObject = () => {
+      Spicetify.LocalStorage.set("LegacyLook-settingsObject", JSON.stringify(settingsObject2));
+      updateStyleElement();
+    };
+    if (settingsFromStorage == null) {
+      settingsObject2 = defaultSettingsObject();
+      log("Setting not available in local storage, most likely first run.");
+      saveObject();
+      Spicetify.showNotification("Hello! Go to Spotify settings to configure the extension to your liking.", 5e3);
+      log("Current settings are: ", settingsObject2);
+    } else {
+      settingsObject2 = settingsFromStorage;
+    }
+    console.log("Add Settings");
+    const settings = new SettingsSection("LegacyLook Tweak settings", "LegacyLook-settings");
+    if (Spicetify.Platform.PlatformData.event_sender_context_information.client_version_string == "1.2.10.760") {
+      settings.addToggle(
+        "hasDisabledCompatibilityWarning",
+        "Disable Compatibility warning at startup",
+        Spicetify.LocalStorage.get("LegacyLook-hasDisabledCompatibilityWarning"),
+        (e) => {
+          Spicetify.LocalStorage.set("LegacyLook-hasDisabledCompatibilityWarning", e.target.checked);
+        }
+      );
+    }
+    let defaultWidth = 420;
+    settings.addInput(
+      "left-sidebar-max-width",
+      "Left Sidebar Max Width in pixels (420px by default)",
+      Spicetify.LocalStorage.get("LegacyLook-sidebarMaxWidth") ? Spicetify.LocalStorage.get("LegacyLook-sidebarMaxWidth") : defaultWidth,
+      () => {
+        let inputWidth = parseInt(settings.getFieldValue("left-sidebar-max-width"));
+        if (inputWidth < 200 || inputWidth > 1e3) {
+          inputWidth = 420;
+          Spicetify.showNotification("Value must be greater or equal than 200 and less or equal to 1000!");
+        } else {
+          Spicetify.LocalStorage.set("LegacyLook-sidebarMaxWidth", inputWidth);
+          changedMaxWidthSignal(parseInt(settings.getFieldValue("left-sidebar-max-width")));
+        }
+      }
+    );
+    settings.addButton("set-sidebar-max-width-default", `Reset width to default (${defaultWidth}px)`, "RESET", () => {
+      settings.setFieldValue("left-sidebar-max-width", `${defaultWidth}px`);
+      Spicetify.LocalStorage.set("LegacyLook-sidebarMaxWidth", defaultWidth);
+      changedMaxWidthSignal(parseInt(settings.getFieldValue("left-sidebar-max-width")));
+      settings.rerender();
+      Spicetify.showNotification(`Reset to default: ${defaultWidth}px`);
+    });
+    settings.addToggle(
+      "playlistTitleShift12px",
+      "When enabled, shifts playlist title by 12px to the right.",
+      settingsObject2["playlistTitleShift12px"],
+      (e) => {
+        settingsObject2["playlistTitleShift12px"] = e.target.checked;
+        saveObject();
+      }
+    );
+    settings.addToggle(
+      "fullSizeCoverart",
+      "When enabled, Cover Art will take up full width of the Sidebar.",
+      settingsObject2["fullSizeCoverart"],
+      (e) => {
+        settingsObject2["fullSizeCoverart"] = e.target.checked;
+        saveObject();
+      }
+    );
+    settings.addToggle(
+      "removePanelGaps",
+      "When enabled, removes gaps between UI sections, it is meant to be used together with rounded panel corners remover.",
+      settingsObject2["removePanelGaps"],
+      (e) => {
+        settingsObject2["removePanelGaps"] = e.target.checked;
+        saveObject();
+        updatePanelGapsState();
+      }
+    );
+    settings.addToggle(
+      "removeRoundedPanelCorners",
+      "When enabled, removes rounded corners of UI panels, it is meant to be used together with panel gaps remover.",
+      settingsObject2["removeRoundedPanelCorners"],
+      (e) => {
+        settingsObject2["removeRoundedPanelCorners"] = e.target.checked;
+        saveObject();
+      }
+    );
+    settings.addToggle(
+      "changePlaybarColor",
+      "When enabled, changes playbar color to gray, just like 2017 Spotify App.",
+      settingsObject2["changePlaybarColor"],
+      (e) => {
+        settingsObject2["changePlaybarColor"] = e.target.checked;
+        saveObject();
+      }
+    );
+    settings.addToggle(
+      "rootBackgroundColor",
+      "When enabled, changes background color scheme to gray, just like 2017 Spotify App.",
+      settingsObject2["rootBackgroundColor"],
+      (e) => {
+        settingsObject2["rootBackgroundColor"] = e.target.checked;
+        saveObject();
+      }
+    );
+    settings.addToggle(
+      "removePlaylistCoverArt",
+      "When enabled, hides small covers in tracklists.",
+      settingsObject2["removePlaylistCoverArt"],
+      (e) => {
+        settingsObject2["removePlaylistCoverArt"] = e.target.checked;
+        saveObject();
+      }
+    );
+    settings.addToggle(
+      "squareChips",
+      'When enabled, makes selectors just below "My Library" square instead od rounded.',
+      settingsObject2["squareChips"],
+      (e) => {
+        settingsObject2["squareChips"] = e.target.checked;
+        saveObject();
+      }
+    );
+    settings.addToggle(
+      "removeSidebarListEntryRoundedCorners",
+      'When enabled, removes rounded corners from entries in the list below "My library". (Currently buggy.)',
+      settingsObject2["removeSidebarListEntryRoundedCorners"],
+      (e) => {
+        settingsObject2["removeSidebarListEntryRoundedCorners"] = e.target.checked;
+        saveObject();
+      }
+    );
+    settings.addToggle(
+      "playlistEntryUnderscored",
+      "When enabled, underscores each tracklist entry, just like 2017 Spotify App did.",
+      settingsObject2["playlistEntryUnderscored"],
+      (e) => {
+        settingsObject2["playlistEntryUnderscored"] = e.target.checked;
+        saveObject();
+      }
+    );
+    settings.addToggle(
+      "sidebarLibraryUnderscored",
+      "When enabled, underscores each sidebar Library entry.",
+      settingsObject2["sidebarLibraryUnderscored"],
+      (e) => {
+        settingsObject2["sidebarLibraryUnderscored"] = e.target.checked;
+        saveObject();
+      }
+    );
+    settings.addToggle(
+      "removeTrackListRoundedCorners",
+      "When enabled, removes rounded corners of tracklist entries.",
+      settingsObject2["removeTrackListRoundedCorners"],
+      (e) => {
+        settingsObject2["removeTrackListRoundedCorners"] = e.target.checked;
+        saveObject();
+      }
+    );
+    settings.addToggle(
+      "singleLineTracklist",
+      "When enabled, tracklist entries take up only single line, TITLE-ARTIST on a single line.",
+      settingsObject2["singleLineTracklist"],
+      (e) => {
+        settingsObject2["singleLineTracklist"] = e.target.checked;
+        saveObject();
+      }
+    );
+    settings.addToggle(
+      "oldPlayButton",
+      "When enabled, reverts main play button to look like the one 2017 Spotify App had.",
+      settingsObject2["oldPlayButton"],
+      (e) => {
+        settingsObject2["oldPlayButton"] = e.target.checked;
+        saveObject();
+      }
+    );
+    settings.addToggle(
+      "removeExpandLibraryArrowButton",
+      'When enabled, removes "Expand Library Arrow" button. Expanding library is still possible via dragging.',
+      settingsObject2["removeExpandLibraryArrowButton"],
+      (e) => {
+        settingsObject2["removeExpandLibraryArrowButton"] = e.target.checked;
+        saveObject();
+      }
+    );
+    settings.addToggle(
+      "carouselRoundedRectangles",
+      'When enabled, changes carousel buttons to rounded rectangles, used when selectors below "My Library" no longer fit',
+      settingsObject2["carouselRoundedRectangles"],
+      (e) => {
+        settingsObject2["carouselRoundedRectangles"] = e.target.checked;
+        saveObject();
+      }
+    );
+    settings.addToggle(
+      "removeBlankSpaceBetweenMyLibraryAndLikedSongs",
+      'When enabled, removes a bit of blank space between "Liked Songs" and "My Library".',
+      settingsObject2["removeBlankSpaceBetweenMyLibraryAndLikedSongs"],
+      (e) => {
+        settingsObject2["removeBlankSpaceBetweenMyLibraryAndLikedSongs"] = e.target.checked;
+        saveObject();
+      }
+    );
+    settings.addToggle(
+      "removeRoundedCornersSpotifyConnect",
+      "When enabled, removes rounded borders of Spotify Connect bar so it fits nicely.",
+      settingsObject2["removeRoundedCornersSpotifyConnect"],
+      (e) => {
+        settingsObject2["removeRoundedCornersSpotifyConnect"] = e.target.checked;
+        saveObject();
+      }
+    );
+    const checkForReact = () => {
+      if (Spicetify.React) {
+        settings.pushSettings();
+      } else {
+        setTimeout(checkForReact, 50);
+      }
+    };
+    checkForReact();
+  };
+
+  // src/app.js
+  async function main() {
+    while (!(Spicetify == null ? void 0 : Spicetify.showNotification)) {
+      await new Promise((resolve) => setTimeout(resolve, 100));
+    }
+    if (Spicetify.Platform.PlatformData.event_sender_context_information.client_version_string != "1.2.10.760") {
+      if (!Spicetify.LocalStorage.get("LegacyLook-hasDisabledCompatibilityWarning")) {
+        Spicetify.showNotification(`
         LegacyLook.js may not be compatible with this version of Spotify.
         This extension is compatible with Spotify 1.2.10.760.
         You are using ${Spicetify.Platform.PlatformData.event_sender_context_information.client_version_string}.
@@ -250,44 +1068,70 @@ div.main {
         If it works on any other version, let me know,
         and I will add it to the compatibility list.
         You can disable this message in settings.
-        `,0,15e3):Spicetify.showNotification("LegacyTweaks.js is active...",0,500);{var e=JSON.parse(Spicetify.LocalStorage.get("LegacyLook-settingsObject"));let t={};const a=()=>{Spicetify.LocalStorage.set("LegacyLook-settingsObject",JSON.stringify(t)),S()},r=(null==e?(t=L(),i("Setting not available in local storage, most likely first run."),a(),Spicetify.showNotification("Hello! Go to Spotify settings to configure the extension to your liking.",5e3),i("Current settings are: ",t)):t=e,console.log("Add Settings"),new m("LegacyLook Tweak settings","LegacyLook-settings"));"1.2.10.760"==Spicetify.Platform.PlatformData.event_sender_context_information.client_version_string&&r.addToggle("hasDisabledCompatibilityWarning","Disable Compatibility warning at startup",Spicetify.LocalStorage.get("LegacyLook-hasDisabledCompatibilityWarning"),e=>{Spicetify.LocalStorage.set("LegacyLook-hasDisabledCompatibilityWarning",e.target.checked)}),r.addInput("left-sidebar-max-width","Left Sidebar Max Width in pixels (420px by default)",Spicetify.LocalStorage.get("LegacyLook-sidebarMaxWidth")?Spicetify.LocalStorage.get("LegacyLook-sidebarMaxWidth"):420,()=>{let e=parseInt(r.getFieldValue("left-sidebar-max-width"));e<200||1e3<e?(e=420,Spicetify.showNotification("Value must be greater or equal than 200 and less or equal to 1000!")):(Spicetify.LocalStorage.set("LegacyLook-sidebarMaxWidth",e),b(parseInt(r.getFieldValue("left-sidebar-max-width"))))}),r.addButton("set-sidebar-max-width-default","Reset width to default (420px)","RESET",()=>{r.setFieldValue("left-sidebar-max-width","420px"),Spicetify.LocalStorage.set("LegacyLook-sidebarMaxWidth",420),b(parseInt(r.getFieldValue("left-sidebar-max-width"))),r.rerender(),Spicetify.showNotification("Reset to default: 420px")}),r.addToggle("playlistTitleShift12px","When enabled, shifts playlist title by 12px to the right.",t.playlistTitleShift12px,e=>{t.playlistTitleShift12px=e.target.checked,a()}),r.addToggle("fullSizeCoverart","When enabled, Cover Art will take up full width of the Sidebar.",t.fullSizeCoverart,e=>{t.fullSizeCoverart=e.target.checked,a()}),r.addToggle("removePanelGaps","When enabled, removes gaps between UI sections, it is meant to be used together with rounded panel corners remover.",t.removePanelGaps,e=>{t.removePanelGaps=e.target.checked,a(),h()}),r.addToggle("removeRoundedPanelCorners","When enabled, removes rounded corners of UI panels, it is meant to be used together with panel gaps remover.",t.removeRoundedPanelCorners,e=>{t.removeRoundedPanelCorners=e.target.checked,a()}),r.addToggle("changePlaybarColor","When enabled, changes playbar color to gray, just like 2017 Spotify App.",t.changePlaybarColor,e=>{t.changePlaybarColor=e.target.checked,a()}),r.addToggle("rootBackgroundColor","When enabled, changes background color scheme to gray, just like 2017 Spotify App.",t.rootBackgroundColor,e=>{t.rootBackgroundColor=e.target.checked,a()}),r.addToggle("removePlaylistCoverArt","When enabled, hides small covers in tracklists.",t.removePlaylistCoverArt,e=>{t.removePlaylistCoverArt=e.target.checked,a()}),r.addToggle("squareChips",'When enabled, makes selectors just below "My Library" square instead od rounded.',t.squareChips,e=>{t.squareChips=e.target.checked,a()}),r.addToggle("removeSidebarListEntryRoundedCorners",'When enabled, removes rounded corners from entries in the list below "My library". (Currently buggy.)',t.removeSidebarListEntryRoundedCorners,e=>{t.removeSidebarListEntryRoundedCorners=e.target.checked,a()}),r.addToggle("playlistEntryUnderscored","When enabled, underscores each tracklist entry, just like 2017 Spotify App did.",t.playlistEntryUnderscored,e=>{t.playlistEntryUnderscored=e.target.checked,a()}),r.addToggle("sidebarLibraryUnderscored","When enabled, underscores each sidebar Library entry.",t.sidebarLibraryUnderscored,e=>{t.sidebarLibraryUnderscored=e.target.checked,a()}),r.addToggle("removeTrackListRoundedCorners","When enabled, removes rounded corners of tracklist entries.",t.removeTrackListRoundedCorners,e=>{t.removeTrackListRoundedCorners=e.target.checked,a()}),r.addToggle("singleLineTracklist","When enabled, tracklist entries take up only single line, TITLE-ARTIST on a single line.",t.singleLineTracklist,e=>{t.singleLineTracklist=e.target.checked,a()}),r.addToggle("oldPlayButton","When enabled, reverts main play button to look like the one 2017 Spotify App had.",t.oldPlayButton,e=>{t.oldPlayButton=e.target.checked,a()}),r.addToggle("removeExpandLibraryArrowButton",'When enabled, removes "Expand Library Arrow" button. Expanding library is still possible via dragging.',t.removeExpandLibraryArrowButton,e=>{t.removeExpandLibraryArrowButton=e.target.checked,a()}),r.addToggle("carouselRoundedRectangles",'When enabled, changes carousel buttons to rounded rectangles, used when selectors below "My Library" no longer fit',t.carouselRoundedRectangles,e=>{t.carouselRoundedRectangles=e.target.checked,a()}),r.addToggle("removeBlankSpaceBetweenMyLibraryAndLikedSongs",'When enabled, removes a bit of blank space between "Liked Songs" and "My Library".',t.removeBlankSpaceBetweenMyLibraryAndLikedSongs,e=>{t.removeBlankSpaceBetweenMyLibraryAndLikedSongs=e.target.checked,a()}),r.addToggle("removeRoundedCornersSpotifyConnect","When enabled, removes rounded borders of Spotify Connect bar so it fits nicely.",t.removeRoundedCornersSpotifyConnect,e=>{t.removeRoundedCornersSpotifyConnect=e.target.checked,a()}),r.pushSettings(),r.rerender()}k(),i("Developed on: Spotify for Windows; 1.2.10.760.g52970952 Spicetify v2.20.2"),i("May not work on newer Spotify releases..."),i("LegacyTweaks.js v0.2 starting up..."),w(".Root__now-playing-bar").then(()=>{i("Playbar exists, waiting for sidebar to exist..."),w("#spicetify-sticky-list").then(()=>{i("Sidebar exists, waiting for navbtns to exist..."),w('[aria-label="Go back"]').then(()=>{i("Assuming spotify is fully loaded..."),t()})})});const t=()=>{w(".main-topBar-historyButtons").then(e=>{e.prepend((()=>{var e,t=document.createElement("button");t.classList="main-topBar-button main-topBar-forward",t.style="border-radius: 5px;",t.onclick=function(){location.reload()};return t.appendChild((e=`
-    <svg role="img" height="16"
-            width="16" aria-hidden="true" class="Svg-sc-ytk21e-0 Svg-img-16-icon-autoMirror main-topBar-icon"
-            viewBox="0 0 128 128" data-encore-id="icon" style="fill:white;">
-            <path
-                d="M16.08,59.26A8,8,0,0,1,0,59.26a59,59,0,0,1,97.13-45V8a8,8,0,1,1,16.08,0V33.35a8,8,0,0,1-8,8L80.82,43.62a8,8,0,1,1-1.44-15.95l8-.73A43,43,0,0,0,16.08,59.26Zm22.77,19.6a8,8,0,0,1,1.44,16l-10.08.91A42.95,42.95,0,0,0,102,63.86a8,8,0,0,1,16.08,0A59,59,0,0,1,22.3,110v4.18a8,8,0,0,1-16.08,0V89.14h0a8,8,0,0,1,7.29-8l25.31-2.3Z"
-                style="fill:whiteSmoke;opacity:0.8"></path>
-        </svg>`,(new DOMParser).parseFromString(e,"text/html").body.childNodes[0])),t})())}),i("Appended a refresh button to navbuttons..."),w("#spicetify-sticky-list").then(e=>{try{i("Trying to append 'Liked Songs' to sidebar list..."),document.querySelector("#customLikedSongs")||e.insertAdjacentHTML("beforeend",`<li class="main-yourLibraryX-navItem InvalidDropTarget" id="customLikedSongs">
-                                                                                                                                                                      
-              <a draggable="false" aria-label="Liked Songs" class="link-subtle main-yourLibraryX-navLink" href="#" aria-expanded="false" onclick="Spicetify.Platform.History.push('/collection/tracks')">
-          
-              <svg role="img" height="35"
-                  width="35" aria-hidden="true" class="Svg-sc-ytk21e-0 Svg-img-medium-icon search-icon" viewBox="0 -5 24 24"
-                  data-encore-id="icon">
-                  <path
-                      d="M15.724 4.22A4.313 4.313 0 0 0 12.192.814a4.269 4.269 0 0 0-3.622 1.13.837.837 0 0 1-1.14 0 4.272 4.272 0 0 0-6.21 5.855l5.916 7.05a1.128 1.128 0 0 0 1.727 0l5.916-7.05a4.228 4.228 0 0 0 .945-3.577z"
-                      style="fill: gray;"
-                      >
-                  </path>
-              </svg>
-              
-              <svg role="img" height="24" width="24" aria-hidden="true"
-                  class="Svg-sc-ytk21e-0 Svg-img-medium-icon search-active-icon" viewBox="0 0 24 24" data-encore-id="icon">
-                  <path
-                      d="M15.356 10.558c0 2.623-2.16 4.75-4.823 4.75-2.664 0-4.824-2.127-4.824-4.75s2.16-4.75 4.824-4.75c2.664 0 4.823 2.127 4.823 4.75z">
-                  </path>
-                  <path
-                      d="M1.126 10.558c0-5.14 4.226-9.28 9.407-9.28 5.18 0 9.407 4.14 9.407 9.28a9.157 9.157 0 0 1-2.077 5.816l4.344 4.344a1 1 0 0 1-1.414 1.414l-4.353-4.353a9.454 9.454 0 0 1-5.907 2.058c-5.18 0-9.407-4.14-9.407-9.28zm9.407-7.28c-4.105 0-7.407 3.274-7.407 7.28s3.302 7.279 7.407 7.279 7.407-3.273 7.407-7.28c0-4.005-3.302-7.278-7.407-7.278z">
-                  </path>
-              </svg>
-              
-              <span data-encore-id="type" class="Type__TypeElement-sc-goli3j-0 TypeElement-balladBold-type" style="transform:translateX(-11px) ;">
-                  Liked Songs
-              </span>
-          
-              </a>
-          
-          </li>
-          `),document.querySelector("#customLikedSongs")?i("Success! Liked Songs hyperlink is present..."):i("Liked Songs hyperlink injection has failed...")}catch(e){i("Liked Songs hyperlink injection has failed..., got an error:",e)}});{o=null!=Spicetify&&Spicetify.LocalStorage?null==Spicetify?void 0:Spicetify.LocalStorage.get("LegacyLook-sidebarMaxWidth"):420;let a=!1;i("Sidebar width limit is set to:",o),new MutationObserver(e=>{o=null!=Spicetify&&Spicetify.LocalStorage?null==Spicetify?void 0:Spicetify.LocalStorage.get("LegacyLook-sidebarMaxWidth"):420;var t,e=parseInt(e[0].target.style.getPropertyValue("--nav-bar-width"),10);document.querySelector(".main-coverSlotExpanded-containerExpanding")?(2===document.querySelectorAll(".main-yourLibraryX-libraryIsExpanded>div:nth-child(1)>header>div>button.main-useDropTarget-show").length&&((t=document.querySelector(".main-yourLibraryX-iconOnly.main-useDropTarget-base.main-useDropTarget-show")).style.display="block",t.click(),t.style.display=""),o<e&&document.querySelector("html").style.setProperty("--nav-bar-width",o+"px")):(i("isBigCoverListenerPending",a),a||(a=!0,waitForElm(".main-coverSlotExpanded-containerExpanding").then(()=>{document.querySelector(".main-yourLibraryX-header.main-yourLibraryX-headerIsCollapsed")&&document.querySelector(".main-yourLibraryX-collapseButton.main-yourLibraryX-collapseButtonIsCollapsed").firstChild.click(),document.querySelector("html").style.setProperty("--nav-bar-width",o+"px"),a=0})))}).observe(document.querySelector("html"),{attributes:!0,attributeFilter:["style"]})}}};(async()=>{await x()})()})();(async()=>{var e;document.getElementById("legacyTweaks")||((e=document.createElement("style")).id="legacyTweaks",e.textContent=String.raw`
-  .settings-module__settingsContainer___e9wxn_legacyTweaks{display:contents}.settings-module__heading___AnER-_legacyTweaks{grid-column:1/-1;font-size:1.125rem;line-height:1.5rem;color:#fff;margin-top:24px}.settings-module__description___dP4fR_legacyTweaks{font-size:.875rem;line-height:1.25rem}.settings-module__inputWrapper___LgOrw_legacyTweaks{display:flex;justify-self:end}
-      `.trim(),document.head.appendChild(e))})();
+        `, 0, 15e3);
+      }
+    } else {
+      Spicetify.showNotification("LegacyTweaks.js is active...", 0, 500);
+    }
+    setupSettings();
+    applyStyle();
+    log(`Developed on: Spotify for Windows; 1.2.10.760.g52970952 Spicetify v2.20.2`);
+    log("May not work on newer Spotify releases...");
+    log("LegacyTweaks.js v0.2 starting up...");
+    waitForElm(".Root__now-playing-bar").then(() => {
+      log("Playbar exists, waiting for sidebar to exist...");
+      waitForElm(`#spicetify-sticky-list`).then(() => {
+        log("Sidebar exists, waiting for navbtns to exist...");
+        waitForElm(`[aria-label="Go back"]`).then(() => {
+          log("Assuming spotify is fully loaded...");
+          fullyLoaded();
+        });
+      });
+    });
+    const fullyLoaded = () => {
+      waitForElm(`.main-topBar-historyButtons`).then((el) => {
+        el.prepend(injectRefreshUIButton());
+      });
+      log("Appended a refresh button to navbuttons...");
+      waitForElm(`#spicetify-sticky-list`).then((stickyList) => {
+        tryAppendLikesSongsHyperlink(stickyList);
+      });
+      sidebarResizing();
+    };
+  }
+  var app_default = main;
+
+  // node_modules/spicetify-creator/dist/temp/index.jsx
+  (async () => {
+    await app_default();
+  })();
+})();
+(async () => {
+    if (!document.getElementById(`legacyTweaks`)) {
+      var el = document.createElement('style');
+      el.id = `legacyTweaks`;
+      el.textContent = (String.raw`
+  /* C:/Users/szymo/AppData/Local/Temp/tmp-6416-Yu8Moa3MXtYM/18a5718e1cd0/settings.module.css */
+.settings-module__settingsContainer___e9wxn_legacyTweaks {
+  display: contents;
+}
+.settings-module__heading___AnER-_legacyTweaks {
+  grid-column: 1/-1;
+  font-size: 1.125rem;
+  line-height: 1.5rem;
+  color: #fff;
+  margin-top: 24px;
+}
+.settings-module__description___dP4fR_legacyTweaks {
+  font-size: 0.875rem;
+  line-height: 1.25rem;
+}
+.settings-module__inputWrapper___LgOrw_legacyTweaks {
+  display: flex;
+  justify-self: end;
+}
+
+      `).trim();
+      document.head.appendChild(el);
+    }
+  })()
