@@ -24,6 +24,15 @@
 
 ## Installation
 
+Right now only installation from scratch has a guide.
+I recommend completely uninstalling spotify and starting anew.
+Here's a guide to uninstall spicetify:
+[https://spicetify.app/docs/advanced-usage/uninstallation/](https://spicetify.app/docs/advanced-usage/uninstallation/).<br>
+And spotify can be uninstalled via windows uninstaller or whatever.
+<br>
+I will try to fill in remaining bits of documentation, but it will take some time.
+If you want to help, submit a PR and I'll be more than happy to include it in the docs.
+
 ### From scratch:
 
 First off you will need to add following entries to your hosts file:
