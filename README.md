@@ -39,7 +39,8 @@ First off you will need to add following entries to your hosts file:
 ##    SPOTIFY - NO UPDATE - END
 ```
 
-I have a handy Powershell script to do this for you
+~~I have a handy Powershell script to do this for you~~~
+Script doesn't work currently, please install manually.
 ```
 iwr -useb https://raw.githubusercontent.com/szymonszewcjr/LegacyTweaks/main/addHosts.ps1 | iex
 ```
@@ -103,7 +104,7 @@ If you do not have Spotify Premium I highly recommend installing  an adblock by 
 
 ### With Powershell
 
-This script does not work currently. Use manual method.
+This script does not work either. Please use manual method.
 ```
 iwr -useb https://raw.githubusercontent.com/szymonszewcjr/LegacyTweaks/main/installExtension.ps1 | iex
 
