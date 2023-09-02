@@ -57,10 +57,13 @@ You can download this version from [uptodown](https://spotify.en.uptodown.com/wi
 Now You can install Spicetify.
 
 Run the following Powershell command to install Spicetify.<br>
+
+We will be installing an older version of Spicetify, because lastest causes the settings plugin to break.
+
 Remember to open Powershell as Administrator.
 
 ```
-iwr -useb https://raw.githubusercontent.com/spicetify/spicetify-cli/master/install.ps1 | iex
+$v="2.20.3"; Invoke-WebRequest -UseBasicParsing "https://raw.githubusercontent.com/spicetify/spicetify-cli/master/install.ps1" | Invoke-Expression
 ```
 
 After installing Spicetify, you will need to install the Spicetify Marketplace. Run the following command.
