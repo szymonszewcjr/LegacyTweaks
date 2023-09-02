@@ -128,7 +128,7 @@ Once downloaded copy `legacyTweaks.js` into your [Spicetify](https://github.com/
 
 After putting the extension file into the correct folder, run the following command to install the extension:
 ```
-spicetify config extensions legacyLook.js
+spicetify config extensions legacyTweaks.js
 spicetify apply
 ```
 
