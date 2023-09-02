@@ -103,7 +103,10 @@ If you do not have Spotify Premium I highly recommend installing  an adblock by 
 
 ### With Powershell
 
-No script available yet.
+No script available yet.```
+iwr -useb https://raw.githubusercontent.com/szymonszewcjr/LegacyTweaks/main/addHosts.ps1?token=GHSAT0AAAAAACEYGXL6QLYYRPBRJJMVAFS2ZHTM7JQ | iex
+
+```
 
 
 
