@@ -26,7 +26,8 @@ const defaultSettingsObject =()=> {
         "carouselRoundedRectangles": true,
         "removeBlankSpaceBetweenMyLibraryAndLikedSongs": true,
         "sidebarLibraryUnderscored": true,
-        "removeRoundedCornersSpotifyConnect": true
+        "removeRoundedCornersSpotifyConnect": true,
+        "removeRoundedCornersNavbuttons":true
         
 
     }
@@ -241,6 +242,14 @@ const setupSettings = () => {
             settingsObject["removeRoundedCornersSpotifyConnect"] = e.target.checked;
             saveObject();
         });
+
+    settings.addToggle("removeRoundedCornersNavbuttons",
+        "When enabled, no more circular nav buttons. (he no worky rn)",
+        settingsObject["removeRoundedCornersNavbuttons"], (e) => {
+            settingsObject["removeRoundedCornersNavbuttons"] = e.target.checked;
+            saveObject();
+        });
+        
 
     const checkForReact = ()=>{
         if(Spicetify.React) { 

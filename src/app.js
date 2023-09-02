@@ -50,8 +50,8 @@ setupSettings();
 applyStyle();
 
 
-log(`Developed on: Spotify for Windows; 1.2.10.760.g52970952 Spicetify v2.20.2`)
-log("May not work on newer Spotify releases...")
+log(`Developed on: Spotify for Windows; 1.2.10.760.g52970952 Spicetify v2.20.3`)
+log("May not work on newer Spotify/Spicetify releases...")
 log("LegacyTweaks.js v0.2 starting up...");
 
 
@@ -59,7 +59,7 @@ waitForElm(".Root__now-playing-bar").then(()=>{ //wait for playing bar to exist
     log("Playbar exists, waiting for sidebar to exist...")
     waitForElm(`#spicetify-sticky-list`).then(() => { //wait for sidebar to exist
         log("Sidebar exists, waiting for navbtns to exist...")
-        waitForElm(`[aria-label="Go back"]`).then(()=>{//wait for "GO BACK" button to exist
+        waitForElm(`.player-controls__left > button:nth-of-type(2)`).then(()=>{//wait for "GO BACK" button to exist
             // assuming everything has loaded
             log("Assuming spotify is fully loaded...")
             

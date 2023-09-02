@@ -92,7 +92,14 @@ const composeStylesheet = () =>{
     if(settingsObject["removeRoundedCornersSpotifyConnect"]){
         styleTextContent += styles.removeRoundedCornersSpotifyConnect
     }
+
+    if(settingsObject["removeRoundedCornersNavbuttons"]){
+        styleTextContent += styles.removeRoundedCornersNavbuttons
+    }
     
+
+
+
     return styleTextContent;
      
 

@@ -326,4 +326,22 @@ export const removeRoundedCornersSpotifyConnect = `
 }
 `
 
+export const removeRoundedCornersNavbuttons = `
+.main-topBar-button {
+    border-radius: var(--br5) !important;
+}
+
+[aria-label="Friend Activity"] {
+    border-radius: var(--br5);
+}
+
+button>figure {
+    border-radius: var(--br5);
+
+}
+
+[data-encore-id="buttonTertiary"].main-userWidget-boxCondensed {
+    border-radius: var(--br5);
+}
+`
 

@@ -116,7 +116,7 @@ var legacyTweaks = (() => {
   var import_react = __toESM(require_react());
   var import_react_dom = __toESM(require_react_dom());
 
-  // postcss-module:C:\Users\szymo\AppData\Local\Temp\tmp-6416-Yu8Moa3MXtYM\18a5718e1cd0\settings.module.css
+  // postcss-module:C:\Users\szymo\AppData\Local\Temp\tmp-24416-4UNA8ZtflDpc\18a574dce730\settings.module.css
   var settings_module_default = { "settingsContainer": "settings-module__settingsContainer___e9wxn_legacyTweaks", "heading": "settings-module__heading___AnER-_legacyTweaks", "description": "settings-module__description___dP4fR_legacyTweaks", "inputWrapper": "settings-module__inputWrapper___LgOrw_legacyTweaks" };
 
   // node_modules/spcr-settings/settingsSection.tsx
@@ -703,6 +703,24 @@ div.main {
     
 }
 `;
+  var removeRoundedCornersNavbuttons = `
+.main-topBar-button {
+    border-radius: var(--br5) !important;
+}
+
+[aria-label="Friend Activity"] {
+    border-radius: var(--br5);
+}
+
+button>figure {
+    border-radius: var(--br5);
+
+}
+
+[data-encore-id="buttonTertiary"].main-userWidget-boxCondensed {
+    border-radius: var(--br5);
+}
+`;
 
   // src/dynamicStyling.js
   var settingsObject = JSON.parse(Spicetify.LocalStorage.get("LegacyLook-settingsObject"));
@@ -769,6 +787,9 @@ div.main {
     if (settingsObject["removeRoundedCornersSpotifyConnect"]) {
       styleTextContent += removeRoundedCornersSpotifyConnect;
     }
+    if (settingsObject["removeRoundedCornersNavbuttons"]) {
+      styleTextContent += removeRoundedCornersNavbuttons;
+    }
     return styleTextContent;
   };
   var makeStyleElement = (_textContent) => {
@@ -825,7 +846,8 @@ div.main {
       "carouselRoundedRectangles": true,
       "removeBlankSpaceBetweenMyLibraryAndLikedSongs": true,
       "sidebarLibraryUnderscored": true,
-      "removeRoundedCornersSpotifyConnect": true
+      "removeRoundedCornersSpotifyConnect": true,
+      "removeRoundedCornersNavbuttons": true
     };
     return settingsObject2;
   };
@@ -1043,6 +1065,15 @@ div.main {
         saveObject();
       }
     );
+    settings.addToggle(
+      "removeRoundedCornersNavbuttons",
+      "When enabled, no more circular nav buttons. (he no worky rn)",
+      settingsObject2["removeRoundedCornersNavbuttons"],
+      (e) => {
+        settingsObject2["removeRoundedCornersNavbuttons"] = e.target.checked;
+        saveObject();
+      }
+    );
     const checkForReact = () => {
       if (Spicetify.React) {
         settings.pushSettings();
@@ -1075,14 +1106,14 @@ div.main {
     }
     setupSettings();
     applyStyle();
-    log(`Developed on: Spotify for Windows; 1.2.10.760.g52970952 Spicetify v2.20.2`);
-    log("May not work on newer Spotify releases...");
+    log(`Developed on: Spotify for Windows; 1.2.10.760.g52970952 Spicetify v2.20.3`);
+    log("May not work on newer Spotify/Spicetify releases...");
     log("LegacyTweaks.js v0.2 starting up...");
     waitForElm(".Root__now-playing-bar").then(() => {
       log("Playbar exists, waiting for sidebar to exist...");
       waitForElm(`#spicetify-sticky-list`).then(() => {
         log("Sidebar exists, waiting for navbtns to exist...");
-        waitForElm(`[aria-label="Go back"]`).then(() => {
+        waitForElm(`.player-controls__left > button:nth-of-type(2)`).then(() => {
           log("Assuming spotify is fully loaded...");
           fullyLoaded();
         });
@@ -1111,7 +1142,7 @@ div.main {
       var el = document.createElement('style');
       el.id = `legacyTweaks`;
       el.textContent = (String.raw`
-  /* C:/Users/szymo/AppData/Local/Temp/tmp-6416-Yu8Moa3MXtYM/18a5718e1cd0/settings.module.css */
+  /* C:/Users/szymo/AppData/Local/Temp/tmp-24416-4UNA8ZtflDpc/18a574dce730/settings.module.css */
 .settings-module__settingsContainer___e9wxn_legacyTweaks {
   display: contents;
 }
