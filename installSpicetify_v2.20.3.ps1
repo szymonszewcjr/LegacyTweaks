@@ -5,7 +5,7 @@ param (
 )
 
 $PSMinVersion = 3
-$version = "v2.20.3";
+$version = "2.20.3";
 if ($v) {
   $version = $v
 }
