@@ -23,7 +23,98 @@
 
 
 ## Installation
-Copy `legacyTweaks.js` into your [Spicetify](https://github.com/khanhas/spicetify-cli) extensions directory:
+
+### From scratch:
+
+First off you will need to add following entries to your hosts file:
+```
+##    SPOTIFY - NO UPDATE - LegacyTweaks
+
+0.0.0.0 upgrade.spotify.com
+0.0.0.0 sto3-accesspoint-a88.sto3.spotify.net
+0.0.0.0 upgrade.scdn.co
+0.0.0.0 beta.spotify.map.fastly.net
+0.0.0.0 prod.spotify.map.fastlylb.net
+
+##    SPOTIFY - NO UPDATE - END
+```
+
+I have a handy Powershell script to do this for you
+```
+iwr -useb https://raw.githubusercontent.com/szymonszewcjr/LegacyTweaks/main/addHosts.ps1 | iex
+```
+
+If you are not running Windows, you will have to copy those entries to hosts file on your own.
+
+<br>
+
+Next up You will need to download a supported version of Spotify.
+This extension is written for Spotify 1.2.10.760.
+
+You can download this version from [uptodown](https://spotify.en.uptodown.com/windows/download/101586881) or from a [Mirror](https://www.mediafire.com/file/j3bdrv7o3qnmegf/spotify-1-2-10-760.exe/file) and install it.
+
+Now You can install Spicetify.
+
+Run the following Powershell command to install Spicetify.<br>
+Remember to open Powershell as Administrator.
+
+```
+iwr -useb https://raw.githubusercontent.com/spicetify/spicetify-cli/master/install.ps1 | iex
+```
+
+After installing Spicetify, you will need to install the Spicetify Marketplace. Run the following command.
+
+```
+iwr -useb https://raw.githubusercontent.com/spicetify/spicetify-marketplace/main/resources/install.ps1 | iex
+```
+
+Once that is done installing, close all Powershell windows, then open Powershell as Administrator once more. <br>
+
+Check if spicetify is installed properly by running:
+```
+spicetify -v
+```
+If it outputs a version, that means that everything is installed properly, like so.
+```
+PS C:\Users\admin> spicetify -v
+2.20.3
+```
+Now copy and paste those 3 commands into Powershell and run them.
+
+```
+spicetify config inject_css 1
+spicetify config replace_colors 1
+spicetify config current_theme marketplace
+```
+
+Next up run the following commands to ensure that marketplace is installed properly.
+```
+spicetify config custom_apps marketplace
+spicetify apply
+```
+
+You should now be able to lauch Spotify, log in and see a marketplace tab on sidebar, like so:<br>
+![Alt text](./docs/assets/marketplaceInstalledProperly.png)
+
+If you do not have Spotify Premium I highly recommend installing  an adblock by [CharlieS1103](https://github.com/CharlieS1103/spicetify-extensions/tree/main/adblock) from the marketplace.
+
+
+<br>Now you can finally install LegacyTweaks.
+
+### With Powershell
+
+No script available yet.
+
+
+
+### Manual Installation (recommended)
+
+Download the latest version of LegacyTweaks from the [repository](https://github.com/szymonszewcjr/LegacyTweaks/tree/main/dist).<br>
+Or click here to <a href="https://raw.githubusercontent.com/szymonszewcjr/LegacyTweaks/main/dist/legacyTweaks.js" download>Download</a> it directly.
+
+Once downloaded copy `legacyTweaks.js` into your [Spicetify](https://github.com/khanhas/spicetify-cli) extensions directory:
+
+
 | **Platform** | **Path**                                                                            |
 |------------|-----------------------------------------------------------------------------------|
 | **Linux**      | `~/.config/spicetify/Extensions` or `$XDG_CONFIG_HOME/.config/spicetify/Extensions/` |
@@ -36,3 +127,6 @@ spicetify config extensions legacyLook.js
 spicetify apply
 ```
 
+
+And that should be it.<br>
+Have fun!
