@@ -440,4 +440,4 @@ It was developed on: Spotify for Windows; 1.2.10.760
 You can grab this specific version right here [https://spotify.en.uptodown.com/windows/download/101586881](https://spotify.en.uptodown.com/windows/download/101586881)
 
 
-#### If you haven't already installed the extension or have no idea how to do it, I have a installation guide right here [readme.md](../readme.md)
+#### If you haven't already installed the extension or have no idea how to do it, I have a installation guide right here [readme.md](../README.md)
